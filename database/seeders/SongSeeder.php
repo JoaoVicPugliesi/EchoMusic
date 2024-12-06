@@ -8,8 +8,9 @@ use Illuminate\Database\Seeder;
 
 class SongSeeder extends Seeder
 {
+
     public function run(): void
     {
-        Song::factory(50)->create();
+        Song::factory(500)->create();
     }
 }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('songs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Artist::class);
-            $table->foreignIdFor(Album::class);
+            $table->foreignIdFor(Artist::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Album::class)->nullable();
             $table->string('name', '50');
             $table->text('lyrics')->nullable();
             $table->timestamps();

@@ -5,7 +5,7 @@
     <x-walkman.walkman>
         <x-walkman.body>
             <div class="bg-color1 w-4/5 h-4/5 rounded-3xl flex flex-col items-center justify-start gap-10 max-md:w-full">
-                <x-pages.librarypage/>
+                <x-pages.navbar.librarypage/>
             </div>
             <x-walkman.play-button src="play.png" form="#"/>
         </x-walkman.body>

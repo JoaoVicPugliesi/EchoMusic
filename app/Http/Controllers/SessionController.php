@@ -22,8 +22,8 @@ class SessionController extends Controller
         ]);
     
         if(!Auth::attempt($attributes)) {
-            throw ValidationException::withMessages([
-                'email' => 'Sorry. Invalid Email',
+            return throw ValidationException::withMessages([
+                'email' => 'Sorry Invalid Credentials',
             ]);
         }
 

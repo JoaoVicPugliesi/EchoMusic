@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Album extends Model
 {
-    /** @use HasFactory<\Database\Factories\AlbumFactory> */
     use HasFactory;
 
 

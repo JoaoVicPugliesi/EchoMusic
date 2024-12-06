@@ -28,17 +28,35 @@ class SongFactory extends Factory
         'A Thousand Years', 'Latch', 'Wrecking Ball', 'Party Rock Anthem', 'Titanium',
         'On the Floor', 'Born to Die', 'No Tears Left to Cry', 'Ghost', 'Sugar', 'Yesterday',
         'Eleanor Rigby', 'The Scientist', 'In the End', 'Papercut', 'Smooth', 'Zombie',
-        'I am Yours', 'Halo', 'Best Part'
+        'I am Yours', 'Halo', 'Best Part',   'Rolling in the Deep', 'Someone Like You', 'Hello', 
+        'Easy On Me', 'All Too Well', 'Love Story', 'Shake It Off', 'Blank Space', 'Perfect', 'Thinking Out Loud',
+        'Shape of You', 'Photograph', 'Bad Habits', 'As It Was', 'Watermelon Sugar', 
+        'Adore You', 'Levitating', 'Don’t Start Now', 'New Rules', 'One Kiss',
+        'Happier Than Ever', 'Everything I Wanted', 'Bury A Friend', 'Drivers License', 'Good 4 U', 
+        'Deja Vu', 'Blinding Lights', 'Save Your Tears', 'In Your Eyes', 'Peaches',
+        'Stay', 'Intentions', 'Sorry', 'What Do You Mean?', 'Taki Taki', 
+        'I Like It', 'Money', 'WAP', 'Montero (Call Me By Your Name)', 'Industry Baby',
+        'Old Town Road', 'Circles', 'Rockstar', 'Sunflower', 'Wow.', 'God’s Plan', 
+        'One Dance', 'In My Feelings', 'Toosie Slide', 'Passionfruit',
+        'Thank U, Next', '7 Rings', 'No Tears Left To Cry', 'Positions', 'Rain On Me', 
+        'Shallow', 'Poker Face', 'Just Dance', 'Bad Romance', 'Million Reasons',
     ];
 
     public function definition(): array
     {
-           
+
+        $album = Album::query()->inRandomOrder()->first();
+
+        if ($album) {
+            $artistId = $album->artist_id;
+            $albumId = $album->id;
+        }
+
         return [
+            'artist_id' => $artistId,
+            'album_id' => $albumId,
             'name' => fake()->randomElement($this->songs),
-            'artist_id' => Artist::factory(),
-            'album_id' => Album::factory(),
-            'lyrics' => fake()->paragraph()
+            'lyrics' => fake()->paragraph(),
         ];
     }
 }
