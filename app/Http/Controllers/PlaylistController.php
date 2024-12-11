@@ -37,7 +37,38 @@ class PlaylistController extends Controller
 
         $songs = $playlist->songs;
 
-        return view('library.results', ['songs' => $songs]);
+        $user = Auth::user();
+
+        return view('compose.playlistsongs', ['songs' => $songs, 'playlist' => $playlist, 'user' => $user]);
+    }
+
+    public function remove($playlist, $song) {
+
+        $playlist = Playlist::query()->findOrFail($playlist);
+        $song = Song::query()->findOrFail($song);
+
+        if($playlist->user_id !== Auth::user()->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $playlist->songs()->detach($song);
+
+        return redirect()->route('playlists.show', ['playlist' => $playlist]);
+    }
+
+    public function add($playlist, $song) {
+        $playlist = Playlist::query()->findOrFail($playlist);
+        $song = Song::query()->findOrFail($song);
+
+        if ($playlist->songs()->where('song_id', $song->id)->exists()) {
+            return redirect()
+                ->route('playlist.showSongs', ['playlist' => $playlist])
+                ->with('status', 'Song is already in the playlist.');
+        }
+
+        $playlist->songs()->attach($song);
+
+        return redirect()->route('playlists.show', ['playlist' => $playlist]);
     }
 
     public function create() {
@@ -64,12 +95,28 @@ class PlaylistController extends Controller
         return redirect()->route('playlists.show', ['playlist' => $playlist->id]);
     }
 
-    public function edit() {
-        return '';
+    public function edit($playlist) {
+
+        $playlist = Playlist::query()->findOrFail($playlist);
+
+        return view('compose.editplaylist', ['playlist' => $playlist]);
     }
 
-    public function update() {
-        return '';
+    public function update(Request $request, $playlist) {
+
+        $attributes = $request->validate([
+            'name' => ['required', 'min:3', 'max:25'],
+            'description' => ['nullable', 'max:200']
+        ]);
+
+        $playlist = Playlist::query()->findOrFail($playlist);
+
+        $playlist->update([
+            'name' => $attributes['name'],
+            'description' => $attributes['description']
+        ]);
+
+        return redirect()->route('playlists.show', ['playlist' => $playlist]);
     }
  
     public function destroy($playlist) {

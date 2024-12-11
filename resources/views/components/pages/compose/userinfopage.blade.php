@@ -5,11 +5,11 @@
         <div class="text-color1 font-vt323 h-full w-full overflow-hidden overflow-y-scroll custom-scrollbar">
             <div class="flex items-center gap-2">
                 <h3 class="text-2xl">{{ $user->name }}</h3>
-                <x-iconlink href="/compose/user/{{ $user->id }}/show" src="library.png"/>
+                <x-iconlink href="/compose/user/{{ $user->id }}/show" src="library.png" function="Library"/>
                 @if($user->id != $auth->id)
-                    <x-iconlink href="#" src="nofavorite.png"/>
+                    <x-iconlink href="#" src="nofavorite.png" function="Favorite"/>
                 @else 
-                    <x-iconlink href="#" src="edit.png"/>
+                    <x-iconlink href="/profile/edit" src="edit.png" function="Edit"/>
                 @endif
             </div>
             <p class="text-gray-400 text-wrap">{{ $user->description }}</p>

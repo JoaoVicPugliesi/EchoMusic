@@ -1,17 +1,24 @@
-@props(['artists' => [], 'albums' => [], 'songs' => [] ])
+@props(['artists' => [], 'albums' => [], 'songs' => [], 'album' => [], 'isSingles' => []])
 
 <div class="border-b-2 w-full bg-color1 p-2 rounded-t-2xl flex gap-2 overflow-x-scroll custom-scrollbar">
     @if(count($artists) > 0 || count($albums) > 0 || count($songs) > 0)
         @foreach ($artists as $artist)
-            <x-walkman.resultlink src="mars.png" href="/library/artists/{{ $artist->id }}/show" name="{{ $artist->name }}" type="Artist"/>
+            <x-walkman.resultlink :image="$artist->image" src="{{ $artist->image == '' ? asset('/images/mars.png') : $artist->image  }}" href="/library/artists/{{ $artist->id }}/show" name="{{ $artist->name }}" type="Artist"/>
         @endforeach
 
         @foreach ($albums as $album)
-            <x-walkman.resultlink src="album.png" href="/library/albums/{{ $album->id }}/show" name="{{ $album->name }}" type="{{ $album->artist->name }} Album"/>
+            @php
+                $isSingle = $isSingles[$album->id] ?? false;
+            @endphp
+            <x-walkman.resultlink :image="$album->image" src="{{ $album->image == '' ? asset('/images/album.png') : $album->image  }}" href="/library/albums/{{ $album->id }}/show" name="{{ $album->name }}" type="{{ implode(', ', $album->artists)}} {{ $isSingle ? 'Single' : 'Album' }}"/>
         @endforeach
 
         @foreach ($songs as $song)
-            <x-walkman.resultlink src="headphone.png" href="/library/songs/{{ $song->id }}/show" name="{{ $song->name }}" type="{{ $song->artist->name }} Song"/>
+            @if($album != [])
+                <x-walkman.resultlink :image="$album->image" src="{{ $album->image == '' ? asset('/images/headphone.png') : $album->image }}" href="/library/songs/{{ $song->id }}/show" name="{{ $song->name }}" type="{{ implode(', ', $song->artists) }} Song"/>
+            @else
+                <x-walkman.resultlink :image="$song->image" src="{{ $song->image == '' ? asset('/images/headphone.png') : $song->image }}" href="/library/songs/{{ $song->id }}/show" name="{{ $song->name }}" type="{{ implode(', ', $song->artists) }} Song"/>
+            @endif
         @endforeach
 
     @else

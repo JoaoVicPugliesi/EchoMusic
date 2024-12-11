@@ -3,6 +3,7 @@
     'artist' => '',
     'album' => '',
     'song' => '',
+    'user' => ''
 ])
 
 @if($type === 'artist')
@@ -16,5 +17,6 @@
 @elseif($type === 'song')
     <x-pages.library.songinfopage
         :song="$song"
+        :user="$user"
     />
 @endif

@@ -17,6 +17,13 @@ class DatabaseSeeder extends Seeder
             'description' => fake()->paragraph()
         ]);
 
+        User::create([
+            'name' => 'CR7',
+            'email' => 'CR7@gmail.com',
+            'password' => 'CR71234',
+            'description' => fake()->paragraph()
+        ]);
+
         $this->call([
             ArtistSeeder::class,
             AlbumSeeder::class,

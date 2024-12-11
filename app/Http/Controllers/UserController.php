@@ -21,7 +21,11 @@ class UserController extends Controller
 
 
     public function showLibrary($user) {
-        $playlists = Playlist::query()->with('user')->where('user_id', $user)->get();
+        $playlists = Playlist::query()
+                    ->with('user')
+                    ->where('user_id', $user)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
 
         return view('compose.userlibrary', ['playlists' => $playlists]);
     }

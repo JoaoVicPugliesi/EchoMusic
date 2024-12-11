@@ -8,5 +8,4 @@
         <x-forms.form-input type="password" name="password" placeholder="password" />
     </x-forms.form>
     <x-link href="/register" text="Register"/>
-    <x-link href="#" text="Forgot password?"/>
 </x-walkman.footer>

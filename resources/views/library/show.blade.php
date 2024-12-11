@@ -8,6 +8,7 @@
                 :artist="$data ?? ''"
                 :album="$data ?? ''"
                 :song="$data ?? ''"
+                :user="$user ?? ''"
             />
             </div>
             <x-walkman.play-button src="play.png" form="searchArtistForm"/>

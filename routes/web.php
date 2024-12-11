@@ -71,6 +71,7 @@ Route::controller(SongController::class)->middleware('auth')->group(function() {
     Route::get('/library/search/songs', 'search');
     Route::get('/library/songs/{song}/show', 'show');
     Route::get('/library/{song}/play', 'play');
+    Route::get('/library/{song}/add', 'add');
 });
 
 // Playlist Requests
@@ -81,8 +82,12 @@ Route::controller(PlaylistController::class)->middleware('auth')->group(function
     Route::get('/compose/playlist/create', 'create');
     Route::post('/compose/playlists', 'store');
     Route::get('/compose/playlists/{playlist}/show', 'show')->name('playlists.show');
-    Route::get('/compose/playlist/{playlist}/songs', 'showSongs');
+    Route::get('/compose/playlist/{playlist}/songs', 'showSongs')->name('playlist.showSongs');
     Route::delete('/compose/playlists/{playlist}/destroy', 'destroy');
+    Route::get('/compose/playlists/{playlist}/edit', 'edit');
+    Route::patch('/compose/{playlist}/update', 'update');
+    Route::delete('/compose/remove/{playlist}/{song}', 'remove');
+    Route::post('/compose/add/{playlist}/{song}', 'add');
 });
 
 Route::controller(UserController::class)->middleware('auth')->group(function() {
